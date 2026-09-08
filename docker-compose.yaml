@@ -1,31 +1,14 @@
-# Sobe aplicação + banco de uma vez no Docker / Coolify:
+# Aplicação Node.js conectada ao banco de dados no Coolify:
 services:
-  banco:
-    image: mariadb:11
-    restart: always
-    environment:
-      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-oticas_root_senha}
-      MARIADB_DATABASE: ${DB_NAME:-oticas_montagens}
-      MARIADB_USER: ${DB_USER:-oticas}
-      MARIADB_PASSWORD: ${DB_PASSWORD:-oticas_senha_segura}
-    volumes:
-      - dados:/var/lib/mysql
-      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
-    healthcheck:
-      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
-      interval: 10s
-      timeout: 5s
-      retries: 12
-
   app:
     build: .
     restart: always
-    depends_on:
-      banco:
-        condition: service_healthy
+    networks:
+      - default
+      - coolify
     environment:
-      DB_HOST: nii1smqkgzjw7dymsv4pm2bn
-      DB_PORT: 3306
+      DB_HOST: ${DB_HOST:-nii1smqkgzjw7dymsv4pm2bn}
+      DB_PORT: ${DB_PORT:-3306}
       DB_USER: ${DB_USER:-oticas}
       DB_PASSWORD: ${DB_PASSWORD:-oticas_senha_segura}
       DB_NAME: ${DB_NAME:-oticas_montagens}
@@ -42,5 +25,8 @@ services:
       timeout: 5s
       retries: 5
 
-volumes:
-  dados:
+networks:
+  coolify:
+    name: coolify
+    external: true
+
