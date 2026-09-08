@@ -1,0 +1,19 @@
+{
+  "name": "oticas-montagens",
+  "version": "1.0.0",
+  "description": "Controle de montagens de OS da Óticas Único",
+  "private": true,
+  "type": "commonjs",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "migrar": "node server/migrar.js"
+  },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0"
+  }
+}

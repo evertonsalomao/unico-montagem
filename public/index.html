@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#242220">
+  <title>Controle de Montagens — Óticas Único</title>
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:ital,wght@1,600;1,700&display=swap">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<!-- ==================== TELA DE ACESSO ==================== -->
+<div class="gate" id="gate">
+  <div class="gate-blot" aria-hidden="true"></div>
+  <div class="gate-card">
+    <div class="gate-brand">
+      <img class="logo logo-gate" src="logo.png" alt="Óticas Único" width="600" height="197">
+    </div>
+
+    <span class="gate-tag" id="gateTag">Acesso restrito</span>
+    <h1 id="gateTitle">Controle de <em>montagens</em></h1>
+    <p id="gateSub">Entre com o login da sua loja para registrar e acompanhar as OS.</p>
+
+    <form class="gate-form" id="gateForm" autocomplete="off">
+      <label id="gateUserField">
+        <span>Usuário</span>
+        <input id="gateUser" placeholder="Nome da loja" autocomplete="username">
+      </label>
+      <label>
+        <span id="gatePassLabel">Senha</span>
+        <input id="gatePass" type="password" placeholder="Digite sua senha" autocomplete="current-password">
+      </label>
+      <label id="gatePass2Field" hidden>
+        <span>Repita a senha</span>
+        <input id="gatePass2" type="password" placeholder="Digite a senha de novo" autocomplete="new-password">
+      </label>
+      <p class="gate-msg" id="gateMsg"></p>
+      <button class="gate-btn" id="gateBtn" type="submit">Entrar no sistema</button>
+    </form>
+
+    <p class="gate-note" id="gateNote">Óticas Único &nbsp;·&nbsp; Operação interna</p>
+  </div>
+</div>
+
+<!-- ==================== SISTEMA ==================== -->
+<div id="app" hidden>
+  <div class="bar">
+    <div class="brand">
+      <img class="logo logo-bar" src="logo.png" alt="Óticas Único" width="600" height="197">
+      <span class="brand-name">
+        <span>Controle de montagens</span>
+      </span>
+    </div>
+    <div class="bar-right">
+      <span class="who">
+        <b id="whoName">—</b>
+        <span id="whoRole">—</span>
+      </span>
+      <button class="bar-btn" id="btnPass" type="button">Alterar senha</button>
+      <button class="bar-btn out" id="btnOut" type="button">Sair</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <p class="eyebrow" id="hello">Painel de operações</p>
+        <h1>Controle de <em>montagens</em></h1>
+        <p id="scopeNote">Acompanhe e registre as ordens de serviço.</p>
+      </div>
+      <div class="datechip">
+        <span>Hoje</span>
+        <strong id="todayLabel">—</strong>
+      </div>
+    </div>
+
+    <div class="tiles" id="tiles"></div>
+    <div id="banner"></div>
+
+    <div class="tabs" role="tablist" id="tabs"></div>
+
+    <!-- ========== LANÇAR ========== -->
+    <section class="panel on" id="panel-lancar" role="tabpanel" aria-labelledby="tab-lancar">
+      <div class="cols" id="launchCols">
+        <div class="card" id="launchCard">
+          <div class="card-top">
+            <span class="card-icon" aria-hidden="true">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+            </span>
+            <div>
+              <h3>Nova montagem</h3>
+              <p>Vendedor, loja e número da OS</p>
+            </div>
+          </div>
+          <form class="form" id="newForm" autocomplete="off">
+            <div class="pair">
+              <label class="fld">
+                <span>Vendedor</span>
+                <input class="ctl" id="fSeller" placeholder="Nome do vendedor" maxlength="120" required>
+              </label>
+              <label class="fld">
+                <span>Loja</span>
+                <select class="ctl" id="fStore" required></select>
+                <small class="locked" id="fStoreNote" hidden></small>
+              </label>
+            </div>
+            <div class="pair">
+              <label class="fld">
+                <span>Número da OS</span>
+                <input class="ctl tnum" id="fOs" placeholder="Ex.: 10718" maxlength="40" required>
+              </label>
+              <label class="fld">
+                <span>Data de entrega</span>
+                <input class="ctl tnum" id="fDate" type="date" required>
+              </label>
+            </div>
+            <label class="fld">
+              <span>Observação <i>(opcional)</i></span>
+              <textarea class="ctl" id="fObs" placeholder="Prazo, urgência, detalhe da lente…" maxlength="500"></textarea>
+            </label>
+            <button class="go" id="fSubmit" type="submit">Confirmar lançamento</button>
+            <p class="form-note">A data e a hora do registro são gravadas automaticamente.</p>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <span class="card-icon" aria-hidden="true">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <rect x="4" y="4" width="16" height="17" rx="2"></rect>
+                <path d="M8 2.5v3M16 2.5v3M8 11h8M8 15.5h5"></path>
+              </svg>
+            </span>
+            <div>
+              <h3>Serviço em aberto</h3>
+              <p id="openSub">Aguardando e enviadas à loja</p>
+            </div>
+            <span class="count" id="openCount"></span>
+          </div>
+          <div id="openList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== RELATÓRIOS ========== -->
+    <section class="panel" id="panel-relatorios" role="tabpanel" aria-labelledby="tab-relatorios">
+      <div class="card" style="margin-top:24px">
+        <div class="card-top">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg>
+          </span>
+          <div>
+            <h3>Consultar montagens</h3>
+            <p>Período, loja, número da OS e situação</p>
+          </div>
+        </div>
+        <div class="filters">
+          <div class="fline">
+            <label class="fld"><span>Data inicial</span><input class="ctl tnum" id="qFrom" type="date"></label>
+            <label class="fld"><span>Data final</span><input class="ctl tnum" id="qTo" type="date"></label>
+            <label class="fld" id="qStoreField"><span>Loja</span><select class="ctl" id="qStore"></select></label>
+            <label class="fld">
+              <span>Situação</span>
+              <select class="ctl" id="qStatus"></select>
+            </label>
+          </div>
+          <div class="fline">
+            <label class="fld"><span>Número da OS</span><input class="ctl tnum" id="qOs" placeholder="Busca parcial ou exata"></label>
+            <label class="fld"><span>Vendedor</span><input class="ctl" id="qSeller" placeholder="Nome do vendedor"></label>
+            <div class="fbtns">
+              <button class="go" id="qRun" type="button">Buscar</button>
+              <button class="act" id="qClear" type="button">Limpar</button>
+            </div>
+          </div>
+          <div class="tools">
+            <button class="act" id="expCsv" type="button">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4 20h16"></path></svg>
+              Baixar Excel
+            </button>
+            <button class="act" id="expPrint" type="button">Imprimir / PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="report-head">
+        <div>
+          <p class="eyebrow">Óticas Único</p>
+          <h2>Relatório de montagens</h2>
+          <p id="reportRange">Selecione o período e clique em Buscar.</p>
+        </div>
+        <div class="grand">
+          <span>Total no período</span>
+          <strong class="tnum" id="reportTotal">0</strong>
+          <small>ordens de serviço</small>
+        </div>
+      </div>
+
+      <div class="totals" id="reportTotals"></div>
+      <div id="reportBody"></div>
+    </section>
+
+    <!-- ========== LOJAS ========== -->
+    <section class="panel" id="panel-lojas" role="tabpanel" aria-labelledby="tab-lojas">
+      <div class="card" style="margin-top:24px; max-width:760px">
+        <div class="card-top">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9.5 5 4h14l2 5.5M3 9.5h18M4.5 9.5V20h15V9.5M9.5 20v-5h5v5"></path></svg>
+          </span>
+          <div>
+            <h3>Lojas da rede</h3>
+            <p>Usadas no lançamento e nos filtros</p>
+          </div>
+          <span class="count" id="storeCount"></span>
+        </div>
+        <form class="fline" id="storeForm" style="margin-bottom:18px" autocomplete="off">
+          <label class="fld"><span>Nome da loja</span><input class="ctl" id="sName" placeholder="Ex.: Precisão" maxlength="80" required></label>
+          <button class="go" type="submit" style="height:44px">Adicionar loja</button>
+        </form>
+        <div class="storelist" id="storeList"></div>
+      </div>
+    </section>
+
+    <!-- ========== ACESSOS ========== -->
+    <section class="panel" id="panel-acessos" role="tabpanel" aria-labelledby="tab-acessos">
+      <div class="card" style="margin-top:24px">
+        <div class="card-top">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="12" cy="8" r="3.6"></circle>
+              <path d="M4.5 20c.6-3.9 3.7-6 7.5-6s6.9 2.1 7.5 6"></path>
+            </svg>
+          </span>
+          <div>
+            <h3>Acessos ao sistema</h3>
+            <p>Logins das lojas, do laboratório e da administração</p>
+          </div>
+          <span class="count" id="userCount"></span>
+        </div>
+
+        <form class="form" id="userForm" style="margin-bottom:20px" autocomplete="off">
+          <div class="pair">
+            <label class="fld">
+              <span>Perfil</span>
+              <select class="ctl" id="uRole">
+                <option value="store">Loja — lança e finaliza as OS dela</option>
+                <option value="lab">Laboratório — vê todas as lojas e envia</option>
+                <option value="admin">Administrador — acesso total</option>
+              </select>
+            </label>
+            <label class="fld" id="uStoreField">
+              <span>Loja</span>
+              <select class="ctl" id="uStore"></select>
+            </label>
+          </div>
+          <div class="pair">
+            <label class="fld"><span>Nome exibido</span><input class="ctl" id="uName" placeholder="Ex.: Laboratório" maxlength="80" required></label>
+            <label class="fld"><span>Login</span><input class="ctl" id="uLogin" placeholder="Ex.: laboratorio" maxlength="40" required></label>
+          </div>
+          <label class="fld">
+            <span>Senha inicial <i>(mínimo 6 caracteres — o usuário troca no primeiro acesso)</i></span>
+            <input class="ctl" id="uPass" placeholder="Senha inicial" maxlength="60" required>
+          </label>
+          <button class="go" id="uSubmit" type="submit">Criar acesso</button>
+        </form>
+
+        <div id="userList"></div>
+        <div id="seedBox"></div>
+      </div>
+    </section>
+
+    <div class="foot">
+      <span id="dbState">Conectando ao banco de dados…</span>
+      <span id="docState"></span>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+  <div class="modal-card">
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
+    <div class="modal-code" id="modalCode" hidden></div>
+    <div id="modalTrail" hidden></div>
+    <label class="fld" id="modalField" hidden>
+      <span id="modalLabel">Nome</span>
+      <input class="ctl" id="modalInput" maxlength="60">
+    </label>
+    <div class="modal-actions">
+      <button class="act" id="modalNo" type="button">Cancelar</button>
+      <button class="act strong" id="modalYes" type="button">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
